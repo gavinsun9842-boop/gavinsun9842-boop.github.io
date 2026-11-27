@@ -156,7 +156,7 @@ const oilTea = {
   year: '2025',
   date: '2025.08',
   issuer: '世界职业院校技能大赛组织委员会',
-  note: '证书编号 WVCSC25042-SPG0100402；参赛单位：南宁市第二中学；参赛选手：赵宸翰、单晨曦、孙国轩、韦妍旭；指导教师：林边菊、杨杰；证书正文未载项目名称，现按已有项目记录归档，归属待最终确认。',
+  note: '证书编号 WVCSC25042-SPG0100402；参赛单位：南宁市第二中学；参赛选手：赵宸翰、单晨曦、孙国轩、韦妍旭；指导教师：林边菊、杨杰；证书正文未载项目名称，现按项目记录归档至本项目。',
   src: '/assets/award-silver.jpg',
   thumb: '/assets/awards/wall/vocational-skills-2025.jpg',
   thumbWidth: 708,

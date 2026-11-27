@@ -1,4 +1,4 @@
-// 校园墙系统架构图：四层纵向结构 + SVG 细线连接 + 克制的数据流动。
+// 鹅岛系统架构图：四层纵向结构 + SVG 细线连接 + 克制的数据流动。
 // 仅服务 campus-wall 项目页；使用现有 React / CSS / SVG，不引入动画库。
 // 动画由 CSS 驱动，React 只负责可见性、焦点态与节点展开。
 
@@ -315,7 +315,7 @@ export default function CampusSystemArchitecture() {
         </div>
       </header>
 
-      <div className="arch-board" role="group" aria-label="校园墙四层系统架构">
+      <div className="arch-board" role="group" aria-label="鹅岛四层系统架构">
         <div className="arch-origin">
           <span className="arch-origin-dot" aria-hidden="true" />
           <span className="arch-origin-label">用户访问</span>

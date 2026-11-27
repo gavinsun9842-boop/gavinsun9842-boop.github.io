@@ -1,4 +1,4 @@
-// NNEZ 校园墙 —— 项目叙事与证据。
+// 鹅岛（原 NNEZ 校园墙）—— 项目叙事与证据。
 // 四段 STAR：S 项目背景 / T 目标与任务 / A 工程实践与迭代 / R 成果与现实进展。
 // 只写已确认的开发、备案、测试与协作事实；未形成的用户规模、收入、审核指标不补写。
 
@@ -7,11 +7,11 @@ export default {
   order: 1,
   no: '01',
   kicker: ' ',
-  title: 'NNEZ 校园墙',
+  title: '鹅岛',
   subtitle: '综合型校园数字平台',
   role: '项目发起人 / 主要技术负责人',
   scene: ' 在校学生、外界人士',
-  status: '已备案部署，运营申请推进中，未开放正式站点',
+  status: '已备案部署，已向校方请示，在校方指导下进行部分整改',
   links: [
     { label: '部署站点', href: 'https://nnezxyq.cn' },
   ],
@@ -132,22 +132,22 @@ export default {
               items: [
                 {
                   src: '/projects/campus-wall/home.jpg',
-                  alt: 'NNEZ 校园墙首页，校园主视觉、发帖入口、内容分类与动态信息流',
+                  alt: '鹅岛首页，校园主视觉、发帖入口、内容分类与动态信息流',
                   caption: '首页 · 校园动态与内容分类',
                 },
                 {
                   src: '/projects/campus-wall/discover.jpg',
-                  alt: 'NNEZ 校园墙发现页，校园热门内容与专题卡片',
+                  alt: '鹅岛发现页，校园热门内容与专题卡片',
                   caption: '发现 · 热门内容与校园专题',
                 },
                 {
                   src: '/projects/campus-wall/campus.jpg',
-                  alt: 'NNEZ 校园墙校园页，校园八景、地图入口与社团活动入口',
+                  alt: '鹅岛校园页，校园八景、地图入口与社团活动入口',
                   caption: '校园 · 校园八景与活动入口',
                 },
                 {
                   src: '/projects/campus-wall/game.jpg',
-                  alt: 'NNEZ 校园墙校史寻踪专题，百廿二中校园文化问答界面',
+                  alt: '鹅岛校史寻踪专题，百廿二中校园文化问答界面',
                   caption: '校史寻踪 · 校园文化专题',
                 },
               ],
@@ -195,7 +195,7 @@ export default {
             {
               t: 'figure',
               src: '/projects/campus-wall/evidence/video-review-test.png',
-              alt: '校园墙测试站审核后台：伪 core 风险样本视频进入待审核队列，AI 建议拦截，人工复核入口保留',
+              alt: '鹅岛测试站审核后台：伪 core 风险样本视频进入待审核队列，AI 建议拦截，人工复核入口保留',
               caption: '测试站实机审核 · 伪 core 风险样本（非真实暴力内容）',
               ratio: '1898 / 967',
             },
@@ -256,8 +256,17 @@ export default {
     {
       key: 'R',
       title: '成果与现实进展',
-      lead: '平台已完成主要功能、部署与备案；运营协作与审批仍在推进。',
+      lead: '平台已完成主要功能、部署与备案；经与校方请示，目前已在校方指导下进行部分整改。',
       blocks: [
+        {
+          t: 'figure',
+          variant: 'portrait',
+          src: '/projects/campus-wall/evidence/school-guidance.jpg',
+          alt: '与南宁二中政教处老师就平台整改事项当面沟通后的合影',
+          caption: '向副校长请示',
+          ratio: '958 / 1485',
+        },
+        { t: 'p', text: '平台名称、内容范围与运营方式按校方意见进行部分整改；整改期间不对外开放，完成后再推进正式上线。' },
         {
           t: 'statusboard',
           columns: [
@@ -267,14 +276,15 @@ export default {
                 '主要功能开发并部署',
                 'ICP 与公安联网备案',
                 '项目主体登记',
+                '已向校方请示，进入校方指导下的整改',
                 '学生测试与问题修复',
               ],
             },
             {
               label: '推进中',
               items: [
-                '学校向教育局请示，拟在教育局指导下推进（尚未获批）',
-                '正式运营准备（尚未最终确定）',
+                '按校方意见完成部分整改',
+                '整改后申请正式开放（尚未获批）',
               ],
             },
             {

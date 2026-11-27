@@ -34,6 +34,9 @@ jobs:
         run: npm ci --no-audit --no-fund
 
       - name: Build site
+        env:
+          # 媒体资源独立域名：回滚时删除该 env 即切回仓库内的相对路径
+          VITE_MEDIA_BASE_URL: https://assets.nnezxyq.cn
         run: npm run build
 
       - name: Upload Pages artifact

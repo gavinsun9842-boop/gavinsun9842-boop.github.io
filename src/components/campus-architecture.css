@@ -1,0 +1,565 @@
+/* ============================================================
+   CAMPUS WALL / SYSTEM ARCHITECTURE
+   独立样式：仅作用于 .arch 组件，不覆盖详情页现有节点。
+   ============================================================ */
+
+.arch {
+  --arch-border: rgba(236, 238, 233, 0.12);
+  --arch-border-strong: rgba(236, 238, 233, 0.24);
+  --arch-surface: rgba(15, 19, 22, 0.52);
+
+  position: relative;
+  isolation: isolate;
+  margin: 42px 0 36px;
+  padding: 28px 0 22px;
+  border-top: 1px solid var(--line-strong);
+  border-bottom: 1px solid var(--arch-border);
+}
+
+.arch::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 16% 0%, rgba(255, 74, 28, 0.055), transparent 38%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.012), transparent 42%);
+}
+
+.arch-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 28px;
+  padding-bottom: 19px;
+  border-bottom: 1px solid var(--arch-border);
+}
+
+.arch-head-copy { min-width: 0; }
+
+.arch-kicker {
+  display: block;
+  font: 500 10px/1 var(--mono);
+  letter-spacing: 0.12em;
+  color: var(--accent);
+}
+
+.arch-head h2 {
+  margin: 11px 0 0;
+  font: 600 clamp(24px, 2.4vw, 32px)/1.22 var(--body);
+  letter-spacing: -0.025em;
+  color: var(--text);
+  text-wrap: balance;
+}
+
+.arch-head p {
+  max-width: 620px;
+  margin: 9px 0 0;
+  font-size: 14px;
+  line-height: 1.8;
+  color: var(--muted);
+}
+
+.arch-legend {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 17px;
+  padding-bottom: 4px;
+  font: 500 10px/1 var(--mono);
+  letter-spacing: 0.06em;
+  color: var(--dim);
+}
+
+.arch-legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  white-space: nowrap;
+}
+
+.arch-legend-item i {
+  display: block;
+  width: 17px;
+  height: 1px;
+  background: var(--accent);
+  position: relative;
+}
+
+.arch-legend-item i::after {
+  content: '';
+  position: absolute;
+  top: -2px;
+  right: 0;
+  width: 3px;
+  height: 5px;
+  border-top: 1px solid var(--accent);
+  border-right: 1px solid var(--accent);
+  transform: rotate(45deg);
+  opacity: 0.7;
+}
+
+.arch-legend-item.is-response i {
+  height: 1px;
+  background: repeating-linear-gradient(90deg, var(--muted) 0 3px, transparent 3px 7px);
+}
+
+.arch-legend-item.is-response i::after {
+  border-color: var(--muted);
+  transform: rotate(-135deg);
+}
+
+.arch-board {
+  position: relative;
+  padding-top: 10px;
+}
+
+/* 起点：用户访问 */
+.arch-origin {
+  width: max-content;
+  max-width: 100%;
+  margin: 5px auto 0;
+  padding: 9px 21px 8px;
+  display: grid;
+  justify-items: center;
+  gap: 3px;
+  border: 1px solid var(--arch-border-strong);
+  background: linear-gradient(180deg, rgba(255, 74, 28, 0.045), rgba(15, 19, 22, 0.5));
+  position: relative;
+  opacity: 0;
+  transform: translateY(6px);
+  animation: arch-layer-in 0.45s cubic-bezier(0.22, 0.7, 0.2, 1) both;
+  animation-play-state: paused;
+}
+
+.arch.is-visible .arch-origin { animation-play-state: running; }
+
+.arch-origin-dot {
+  position: absolute;
+  left: 9px;
+  top: 50%;
+  width: 5px;
+  height: 5px;
+  margin-top: -2.5px;
+  background: var(--accent);
+  box-shadow: 0 0 0 3px rgba(255, 74, 28, 0.08);
+}
+
+.arch-origin-label {
+  font-size: 13.5px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: var(--text);
+}
+
+.arch-origin small {
+  font: 400 9px/1.3 var(--mono);
+  letter-spacing: 0.06em;
+  color: var(--dim);
+}
+
+/* 层间连接：一条绘制基线 + 两条缓慢流动的请求/响应线 */
+.arch-connector-wrap {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  height: 64px;
+}
+
+.arch-connector {
+  width: 40px;
+  height: 100%;
+  position: relative;
+}
+
+.arch-connector svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.arch-link-base {
+  stroke: var(--arch-border-strong);
+  stroke-width: 1;
+  stroke-dasharray: 100;
+  stroke-dashoffset: 100;
+  transition: stroke-dashoffset 0.55s ease var(--delay, 0s), stroke 0.3s ease, opacity 0.3s ease;
+}
+
+.arch.is-visible .arch-link-base { stroke-dashoffset: 0; }
+
+.arch-link-down,
+.arch-link-up {
+  stroke-linecap: round;
+  animation-play-state: paused;
+}
+
+.arch-link-down {
+  stroke: var(--accent);
+  stroke-width: 1.3;
+  stroke-dasharray: 4 12;
+  opacity: 0.55;
+  animation: arch-flow-down 5.8s linear infinite;
+}
+
+.arch-link-up {
+  stroke: rgba(236, 238, 233, 0.36);
+  stroke-width: 1;
+  stroke-dasharray: 2 16;
+  opacity: 0.32;
+  animation: arch-flow-up 7s linear infinite;
+}
+
+.arch.is-visible .arch-link-down,
+.arch.is-visible .arch-link-up { animation-play-state: running; }
+
+.arch.is-paused .arch-link-down,
+.arch.is-paused .arch-link-up { animation-play-state: paused; }
+
+.arch-connector.is-active .arch-link-base {
+  stroke: var(--accent);
+  opacity: 0.95;
+}
+
+.arch-connector.is-active .arch-link-down { opacity: 0.9; }
+.arch-connector.is-active .arch-link-up { opacity: 0.6; }
+.arch-connector.is-dim { opacity: 0.28; }
+
+.arch-connector-caption {
+  position: absolute;
+  left: calc(50% + 28px);
+  top: 50%;
+  transform: translateY(-50%);
+  font: 400 9px/1 var(--mono);
+  letter-spacing: 0.08em;
+  color: var(--dim);
+  white-space: nowrap;
+}
+
+/* 四层 */
+.arch-layer {
+  display: grid;
+  grid-template-columns: 54px minmax(0, 1fr);
+  column-gap: 18px;
+  padding: 17px 18px 18px;
+  border-top: 1px solid var(--arch-border);
+  background: transparent;
+  opacity: 0;
+  transform: translateY(8px);
+  animation: arch-layer-in 0.55s cubic-bezier(0.22, 0.7, 0.2, 1) both;
+  animation-delay: var(--delay, 0s);
+  animation-play-state: paused;
+  transition: background 0.28s ease, box-shadow 0.3s ease, filter 0.3s ease, border-color 0.3s ease;
+}
+
+.arch.is-visible .arch-layer { animation-play-state: running; }
+
+.arch-layer:focus-visible {
+  outline: 1px solid rgba(255, 74, 28, 0.35);
+  outline-offset: 2px;
+}
+
+.arch-layer.is-focus {
+  border-top-color: rgba(255, 74, 28, 0.34);
+  background: linear-gradient(90deg, rgba(255, 74, 28, 0.045), transparent 72%);
+  box-shadow: inset 2px 0 0 var(--accent);
+}
+
+.arch-layer.is-dim { filter: brightness(0.62) saturate(0.65); }
+
+.arch-layer-rail {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  padding-top: 3px;
+}
+
+.arch-layer-no {
+  font: 600 11px/1 var(--mono);
+  letter-spacing: 0.08em;
+  color: var(--accent);
+}
+
+.arch-layer-rule {
+  display: block;
+  width: 1px;
+  height: 28px;
+  background: var(--arch-border-strong);
+}
+
+.arch-layer-body { min-width: 0; }
+
+.arch-layer-head {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 6px 16px;
+  margin-bottom: 13px;
+}
+
+.arch-layer-head h3 {
+  margin: 0;
+  font: 600 16.5px/1.35 var(--body);
+  letter-spacing: -0.01em;
+  color: var(--text);
+}
+
+.arch-layer-head p {
+  margin: 0;
+  font-size: 12.5px;
+  line-height: 1.55;
+  color: var(--dim);
+  transition: color 0.25s ease;
+}
+
+.arch-layer.is-focus .arch-layer-head p { color: var(--muted); }
+
+.arch-nodes {
+  display: grid;
+  gap: 8px;
+}
+
+.arch-layer-access .arch-nodes { grid-template-columns: 1.12fr 0.9fr 1.12fr; }
+.arch-layer-business .arch-nodes { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.arch-layer-data .arch-nodes { grid-template-columns: 1fr 1.1fr 1fr; }
+.arch-layer-runtime .arch-nodes { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+
+.arch-node {
+  appearance: none;
+  -webkit-appearance: none;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  width: 100%;
+  min-width: 0;
+  min-height: 67px;
+  margin: 0;
+  padding: 11px 11px 10px;
+  border: 1px solid rgba(236, 238, 233, 0.11);
+  border-radius: 0;
+  background: rgba(15, 19, 22, 0.5);
+  color: var(--text);
+  text-align: left;
+  font: inherit;
+  cursor: pointer;
+  transition: border-color 0.2s ease, background 0.2s ease, transform 0.2s ease;
+}
+
+.arch-node:hover {
+  border-color: rgba(255, 74, 28, 0.5);
+  background: rgba(255, 74, 28, 0.045);
+}
+
+.arch-node:focus-visible {
+  outline: 1px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.arch-node.is-open {
+  border-color: rgba(255, 74, 28, 0.72);
+  background: rgba(255, 74, 28, 0.06);
+}
+
+.arch-node-label {
+  display: block;
+  max-width: 100%;
+  font-size: 14px;
+  line-height: 1.45;
+  font-weight: 500;
+  letter-spacing: -0.008em;
+  color: var(--text);
+  overflow-wrap: anywhere;
+}
+
+.arch-node-sub {
+  display: block;
+  max-width: 100%;
+  font: 400 10px/1.4 var(--mono);
+  letter-spacing: 0.035em;
+  color: var(--dim);
+  overflow-wrap: anywhere;
+}
+
+.arch-node-detail {
+  display: block;
+  max-height: 0;
+  margin-top: 0;
+  overflow: hidden;
+  opacity: 0;
+  font-size: 12px;
+  line-height: 1.6;
+  color: var(--muted);
+  transition: max-height 0.28s ease, opacity 0.2s ease, margin-top 0.28s ease;
+}
+
+.arch-node.is-open .arch-node-detail {
+  max-height: 80px;
+  margin-top: 2px;
+  opacity: 1;
+}
+
+.arch-layer-runtime {
+  border-top-color: var(--line-strong);
+  background: linear-gradient(90deg, rgba(255, 74, 28, 0.025), transparent 42%);
+}
+
+.arch-layer-runtime .arch-node {
+  border-color: rgba(236, 238, 233, 0.09);
+  background: rgba(7, 9, 11, 0.48);
+}
+
+.arch-hint {
+  margin: 16px 0 0;
+  font: 400 9.5px/1.5 var(--mono);
+  letter-spacing: 0.045em;
+  color: var(--dim);
+}
+
+@keyframes arch-layer-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes arch-flow-down {
+  to { stroke-dashoffset: -120; }
+}
+
+@keyframes arch-flow-up {
+  from { stroke-dashoffset: -120; }
+  to { stroke-dashoffset: 0; }
+}
+
+@media (max-width: 720px) {
+  .arch {
+    margin: 36px 0 28px;
+    padding: 24px 0 18px;
+  }
+
+  .arch-head {
+    display: block;
+    padding-bottom: 16px;
+  }
+
+  .arch-head h2 {
+    margin-top: 10px;
+    font-size: 24px;
+  }
+
+  .arch-head p {
+    margin-top: 8px;
+    font-size: 13.5px;
+    line-height: 1.75;
+  }
+
+  .arch-legend {
+    margin-top: 15px;
+    padding-bottom: 0;
+    gap: 15px;
+  }
+
+  .arch-layer {
+    grid-template-columns: 34px minmax(0, 1fr);
+    column-gap: 12px;
+    padding: 15px 12px 16px;
+  }
+
+  .arch-layer-head {
+    display: block;
+    margin-bottom: 11px;
+  }
+
+  .arch-layer-head h3 { font-size: 15.5px; }
+
+  .arch-layer-head p {
+    margin-top: 4px;
+    font-size: 11.5px;
+  }
+
+  .arch-layer-rule { height: 22px; }
+
+  .arch-layer-access .arch-nodes,
+  .arch-layer-business .arch-nodes,
+  .arch-layer-data .arch-nodes,
+  .arch-layer-runtime .arch-nodes {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .arch-layer-access .arch-nodes .arch-node:last-child {
+    grid-column: span 2;
+  }
+
+  .arch-layer-data .arch-nodes .arch-node:last-child {
+    grid-column: span 2;
+  }
+
+  .arch-node {
+    min-height: 62px;
+    padding: 10px 10px 9px;
+  }
+
+  .arch-node-label { font-size: 13.5px; }
+
+  .arch-node-detail { font-size: 11px; }
+
+  .arch-connector-wrap { height: 46px; }
+  .arch-connector { width: 32px; }
+  .arch-connector-caption { display: none; }
+
+  /* 移动端不做持续流动，只保留首次入场与点击/聚焦反馈。 */
+  .arch-link-down,
+  .arch-link-up {
+    animation: none;
+  }
+
+  .arch-link-down { opacity: 0.4; }
+  .arch-link-up { opacity: 0.24; }
+
+  .arch-hint { margin-top: 14px; }
+}
+
+@media (max-width: 390px) {
+  .arch-head h2 { font-size: 22px; }
+
+  .arch-layer {
+    grid-template-columns: 28px minmax(0, 1fr);
+    column-gap: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  .arch-node-label { font-size: 13px; }
+  .arch-node-sub { font-size: 9.5px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .arch-layer,
+  .arch-origin {
+    animation: none !important;
+    opacity: 1;
+    transform: none;
+  }
+
+  .arch-link-base {
+    transition: none;
+    stroke-dashoffset: 0;
+  }
+
+  .arch-link-down,
+  .arch-link-up {
+    animation: none;
+    opacity: 0.22;
+  }
+
+  .arch-link-down { opacity: 0.36; }
+  .arch-link-up { opacity: 0.24; }
+
+  .arch-node,
+  .arch-node-detail,
+  .arch-layer {
+    transition: none;
+  }
+}

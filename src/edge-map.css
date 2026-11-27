@@ -1,0 +1,420 @@
+/* ============================================================
+   EDGE / WHAT I BRING
+   Scoped only to the homepage advantage section.
+   3 + 2 technical capability map, drawn with SVG + CSS.
+   ============================================================ */
+
+/* ---------- card grid ---------- */
+.edge-grid {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  align-items: stretch;
+  gap: 1px;
+  border: 1px solid var(--line);
+  background: var(--line);
+}
+
+.edge-card {
+  grid-column: span 2;
+  position: relative;
+  min-height: 430px;
+  padding: 28px 26px 30px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--bg);
+  transition: background 0.35s ease, opacity 0.85s ease, transform 0.85s ease;
+}
+
+.edge-card:nth-child(4),
+.edge-card:nth-child(5) {
+  grid-column: span 3;
+}
+
+.edge-card:hover {
+  background:
+    radial-gradient(ellipse at 72% 16%, rgba(255, 74, 28, 0.065), transparent 58%),
+    var(--bg-soft);
+}
+
+/* A short accent rule appears only on hover. */
+.edge-card::after {
+  content: '';
+  position: absolute;
+  top: -1px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: var(--accent);
+  transition: width 0.45s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.edge-card:hover::after { width: 56px; }
+
+/* ---------- technical visual ---------- */
+.edge-visual {
+  position: relative;
+  height: clamp(184px, 14.7vw, 214px);
+  margin: 8px 0 16px;
+  padding: 5px 0;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  border-top: 1px solid rgba(226, 236, 234, 0.075);
+  border-bottom: 1px solid rgba(226, 236, 234, 0.075);
+  transition: border-color 0.35s ease, background-color 0.35s ease;
+}
+
+/* 极淡的工程点阵，只作为流程图的纸面纹理，不参与信息表达。 */
+.edge-visual::before {
+  content: '';
+  position: absolute;
+  inset: 2px 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image: radial-gradient(rgba(226, 236, 234, 0.16) 0.7px, transparent 0.9px);
+  background-size: 16px 16px;
+  opacity: 0.38;
+  -webkit-mask-image: linear-gradient(180deg, transparent, #000 18%, #000 82%, transparent);
+  mask-image: linear-gradient(180deg, transparent, #000 18%, #000 82%, transparent);
+}
+
+/* 图表顶部的一小段信号扫描线，只在 EDGE 区域进入视口后运行。 */
+.edge-visual::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  width: 26%;
+  height: 1px;
+  pointer-events: none;
+  background: linear-gradient(90deg, transparent, rgba(255, 74, 28, 0.72), transparent);
+  opacity: 0;
+  animation: edge-scan 9s linear infinite;
+}
+
+.edge-card:hover .edge-visual {
+  border-color: rgba(255, 74, 28, 0.14);
+  background-color: rgba(255, 74, 28, 0.012);
+}
+
+.edge-visual .ev-svg {
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+/* ---------- card copy ---------- */
+.edge-copy { margin-top: auto; }
+
+.edge-card h3 {
+  margin: 0 0 13px;
+  font-size: clamp(24px, 2.05vw, 30px);
+  line-height: 1.2;
+  letter-spacing: -0.025em;
+}
+
+.edge-desc {
+  margin: 0;
+  max-width: 58ch;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.85;
+}
+
+/* ---------- SVG drawing language ---------- */
+.ev-svg text,
+.ev-svg path,
+.ev-svg rect,
+.ev-svg circle,
+.ev-svg ellipse,
+.ev-svg line {
+  vector-effect: non-scaling-stroke;
+}
+
+.ev-line,
+.ev-connect,
+.ev-loop-line,
+.ev-loop-seg,
+.ev-flow,
+.ev-arc,
+.ev-check,
+.ev-gate-line {
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: stroke 0.35s ease, opacity 0.35s ease, fill 0.35s ease;
+}
+
+.ev-line { stroke: rgba(226, 236, 234, 0.31); stroke-width: 1; }
+.ev-line--faint { stroke: rgba(226, 236, 234, 0.14); }
+.ev-line--dashed { stroke: rgba(226, 236, 234, 0.22); stroke-dasharray: 3 5; }
+.ev-connect { stroke: rgba(226, 236, 234, 0.38); stroke-width: 1; }
+.ev-connect--hot { stroke: rgba(255, 74, 28, 0.62); }
+.ev-flow { stroke: rgba(255, 74, 28, 0.40); stroke-dasharray: 2 5; }
+.ev-loop-line { stroke: rgba(226, 236, 234, 0.20); stroke-dasharray: 4 5; }
+.ev-loop-seg { stroke: rgba(226, 236, 234, 0.36); stroke-width: 1; }
+.ev-loop-seg--hot { stroke: rgba(255, 74, 28, 0.62); }
+.ev-arc { stroke: rgba(226, 236, 234, 0.25); stroke-width: 1; stroke-dasharray: 2 5; }
+.ev-check { stroke: rgba(255, 74, 28, 0.42); stroke-width: 1; }
+
+/* ---------- animated signal layer ---------- */
+.ev-trace {
+  fill: none;
+  stroke: rgba(255, 74, 28, 0.68);
+  stroke-width: 1.15;
+  stroke-linecap: round;
+  stroke-dasharray: 3 11;
+  opacity: 0;
+  pointer-events: none;
+  animation: edge-trace 4s linear infinite;
+}
+
+.ev-trace--rail {
+  stroke: rgba(226, 236, 234, 0.48);
+  stroke-width: 1;
+  animation-duration: 6.4s;
+}
+
+.ev-node-pulse {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 1;
+  opacity: 0;
+  pointer-events: none;
+  animation: edge-node-pulse 4.8s ease-out infinite;
+}
+
+.ev-gate-pulse {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 1;
+  opacity: 0;
+  pointer-events: none;
+  animation: edge-gate-pulse 4.6s ease-out infinite;
+}
+
+.ev-box {
+  fill: rgba(18, 24, 27, 0.58);
+  stroke: rgba(226, 236, 234, 0.31);
+  stroke-width: 1;
+  transition: stroke 0.35s ease, fill 0.35s ease;
+}
+
+.ev-node--hot .ev-box {
+  fill: rgba(255, 74, 28, 0.07);
+  stroke: rgba(255, 74, 28, 0.62);
+}
+
+.ev-chip {
+  fill: rgba(226, 236, 234, 0.08);
+  stroke: rgba(226, 236, 234, 0.32);
+  stroke-width: 1;
+  transition: stroke 0.35s ease, fill 0.35s ease;
+}
+
+.ev-gate-line {
+  fill: rgba(255, 74, 28, 0.07);
+  stroke: rgba(255, 74, 28, 0.60);
+  stroke-width: 1;
+}
+
+.ev-dot { fill: rgba(226, 236, 234, 0.44); }
+.ev-dot-hot { fill: rgba(255, 74, 28, 0.68); }
+.ev-arrow { fill: rgba(226, 236, 234, 0.42); }
+.ev-arrow--hot { fill: rgba(255, 74, 28, 0.72); }
+
+.ev-label {
+  fill: #d6dddb;
+  font-family: var(--mono);
+  font-size: 11.5px;
+  font-weight: 500;
+  letter-spacing: 0.035em;
+}
+
+.ev-micro,
+.ev-index {
+  fill: rgba(141, 151, 153, 0.78);
+  font-family: var(--mono);
+  font-size: 8.2px;
+  font-weight: 400;
+  letter-spacing: 0.07em;
+}
+
+.ev-index { font-size: 8.8px; letter-spacing: 0.10em; }
+
+/* Hover only brightens the drawing; all information is already visible at rest. */
+.edge-card:hover .ev-box { stroke: rgba(226, 236, 234, 0.32); }
+.edge-card:hover .ev-node--hot .ev-box {
+  fill: rgba(255, 74, 28, 0.12);
+  stroke: var(--accent);
+}
+.edge-card:hover .ev-connect--hot { stroke: var(--accent); }
+.edge-card:hover .ev-loop-seg--hot { stroke: var(--accent); }
+.edge-card:hover .ev-flow { stroke: var(--accent); --ev-flow-duration: 1.7s; }
+.edge-card:hover .ev-gate-line { fill: rgba(255, 74, 28, 0.12); stroke: var(--accent); }
+.edge-card:hover .ev-dot-hot { fill: var(--accent); }
+.edge-card:hover .ev-arrow--hot { fill: var(--accent); }
+.edge-card:hover .ev-chip { stroke: rgba(255, 74, 28, 0.45); fill: rgba(255, 74, 28, 0.07); }
+
+/* ---------- motion ---------- */
+/* 离开 EDGE 区域时暂停所有流程动画；进入视口后从原位恢复。 */
+.edge:not(.is-edge-live) .edge-visual *,
+.edge:not(.is-edge-live) .edge-visual::after {
+  animation-play-state: paused;
+}
+
+.edge.is-edge-live .ev-flow {
+  animation: edge-flow var(--ev-flow-duration, 5.2s) linear infinite;
+}
+
+.edge.is-edge-live .ev-loop-line {
+  animation: edge-loop-dash 9s linear infinite;
+}
+
+.edge.is-edge-live .ev-arc {
+  animation: edge-arc 6.2s linear infinite;
+}
+
+.edge.is-edge-live .ev-line--dashed {
+  animation: edge-dash 8s linear infinite;
+}
+
+.edge.is-edge-live .ev-line--boundary {
+  animation:
+    edge-dash 8s linear infinite,
+    edge-boundary 6s ease-in-out infinite;
+}
+
+.edge.is-edge-live .ev-connect--hot,
+.edge.is-edge-live .ev-loop-seg--hot,
+.edge.is-edge-live .ev-dot-hot,
+.edge.is-edge-live .ev-arrow--hot,
+.edge.is-edge-live .ev-gate-line {
+  animation: edge-hot-breathe 5.6s ease-in-out infinite;
+}
+
+.edge-card:nth-child(1) .ev-node-pulse { animation-delay: -1.2s; }
+.edge-card:nth-child(2) .ev-node-pulse { animation-delay: -2.4s; }
+.edge-card:nth-child(3) .ev-node-pulse { animation-delay: -3.1s; }
+.edge-card:nth-child(4) .ev-gate-pulse { animation-delay: -1.7s; }
+.edge-card:nth-child(5) .ev-node-pulse { animation-delay: -0.9s; }
+
+.edge-card:nth-child(1) .edge-visual::after { animation-delay: -1.4s; }
+.edge-card:nth-child(2) .edge-visual::after { animation-delay: -4.8s; }
+.edge-card:nth-child(3) .edge-visual::after { animation-delay: -7.2s; }
+.edge-card:nth-child(4) .edge-visual::after { animation-delay: -2.6s; }
+.edge-card:nth-child(5) .edge-visual::after { animation-delay: -5.9s; }
+
+@keyframes edge-scan {
+  0% {
+    transform: translateX(-140%);
+    opacity: 0;
+  }
+  12% { opacity: 0.52; }
+  72% { opacity: 0.34; }
+  100% {
+    transform: translateX(430%);
+    opacity: 0;
+  }
+}
+
+@keyframes edge-flow {
+  to { stroke-dashoffset: -14; }
+}
+
+@keyframes edge-dash {
+  to { stroke-dashoffset: -16; }
+}
+
+@keyframes edge-loop-dash {
+  to { stroke-dashoffset: -18; }
+}
+
+@keyframes edge-arc {
+  to { stroke-dashoffset: -14; }
+}
+
+@keyframes edge-trace {
+  0% { opacity: 0; stroke-dashoffset: 0; }
+  14% { opacity: 0.72; }
+  78% { opacity: 0.6; }
+  100% { opacity: 0; stroke-dashoffset: -14; }
+}
+
+@keyframes edge-node-pulse {
+  0% { opacity: 0.3; stroke-width: 1; }
+  58%, 100% { opacity: 0; stroke-width: 4.6; }
+}
+
+@keyframes edge-gate-pulse {
+  0% { opacity: 0.32; stroke-width: 1; }
+  55%, 100% { opacity: 0; stroke-width: 5; }
+}
+
+@keyframes edge-hot-breathe {
+  0%, 100% { opacity: 0.68; }
+  50% { opacity: 1; }
+}
+
+@keyframes edge-boundary {
+  0%, 100% { opacity: 0.42; }
+  50% { opacity: 0.92; }
+}
+
+/* ---------- responsive ---------- */
+@media (max-width: 1280px) {
+  .edge-card {
+    min-height: 426px;
+    padding: 24px 20px 26px;
+  }
+
+  .edge-card h3 { font-size: 22px; }
+  .edge-desc { font-size: 12px; line-height: 1.8; }
+}
+
+@media (max-width: 1180px) {
+  .edge-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .edge-card,
+  .edge-card:nth-child(4),
+  .edge-card:nth-child(5) { grid-column: span 1; }
+
+  .edge-card:last-child { grid-column: span 2; }
+  .edge-card { min-height: 410px; }
+  .edge-visual { height: 196px; }
+}
+
+@media (max-width: 720px) {
+  .edge-grid { grid-template-columns: 1fr; }
+  .edge-card,
+  .edge-card:nth-child(4),
+  .edge-card:nth-child(5),
+  .edge-card:last-child { grid-column: span 1; }
+
+  .edge-card { min-height: 0; padding: 24px 22px 26px; }
+  .edge-card h3 { font-size: 25px; }
+  .edge-desc { max-width: none; font-size: 13px; }
+  .edge-visual { height: 176px; margin: 8px 0 16px; }
+  .ev-label { font-size: 13.5px; }
+  .ev-micro { font-size: 9.5px; }
+  .ev-index { font-size: 10px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .edge-card::after,
+  .edge-card,
+  .edge-visual * { transition: none !important; }
+
+  .edge-visual *,
+  .edge-visual::after { animation: none !important; }
+
+  .edge-visual::after { opacity: 0; }
+
+  .ev-trace,
+  .ev-node-pulse,
+  .ev-gate-pulse { opacity: 0 !important; }
+}

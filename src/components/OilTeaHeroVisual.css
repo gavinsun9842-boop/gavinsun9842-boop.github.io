@@ -1,0 +1,348 @@
+/* AI 智启油茶香 Hero：金属环 / 茶叶 / 琥珀流体，仅 oil-tea-ai 启用。 */
+
+.ph-oiltea {
+  background: #090807;
+}
+
+.ph-oiltea::before {
+  background: radial-gradient(ellipse at 74% 44%, rgba(193, 138, 77, 0.08), transparent 58%);
+}
+
+.ph-oiltea .ph-inner {
+  grid-template-columns: minmax(0, 760px) minmax(0, 1fr);
+  align-items: end;
+  min-height: 650px;
+}
+
+.ph-oiltea .ph-copy {
+  max-width: 760px;
+  text-shadow: 0 2px 28px rgba(9, 8, 7, 0.38);
+}
+
+.ph-oiltea .pm {
+  position: relative;
+  background: linear-gradient(180deg, rgba(9, 8, 7, 0.42), rgba(9, 8, 7, 0.94));
+}
+
+.oiltea-visual {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  margin: 0;
+  overflow: hidden;
+  isolation: isolate;
+  border: 1px solid rgba(193, 138, 77, 0.2);
+  background:
+    radial-gradient(ellipse at 54% 48%, rgba(64, 38, 21, 0.4), transparent 58%),
+    radial-gradient(ellipse at 72% 82%, rgba(70, 34, 16, 0.2), transparent 55%),
+    #090807;
+  box-shadow:
+    inset 0 0 0 1px rgba(244, 212, 154, 0.018),
+    inset 0 0 150px rgba(0, 0, 0, 0.72),
+    0 24px 70px rgba(0, 0, 0, 0.26);
+}
+
+.oiltea-glow {
+  position: absolute;
+  z-index: 0;
+  width: 58%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  pointer-events: none;
+  filter: blur(86px);
+}
+
+.oiltea-glow-left {
+  top: 13%;
+  left: 10%;
+  background: rgba(193, 138, 77, 0.24);
+  animation: oilteaAmbient 12s ease-in-out -1.8s infinite alternate;
+}
+
+.oiltea-glow-right {
+  right: 6%;
+  bottom: 4%;
+  width: 44%;
+  background: rgba(126, 55, 25, 0.2);
+  animation: oilteaAmbient 12s ease-in-out -6.2s infinite alternate-reverse;
+}
+
+.oiltea-art {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  opacity: 0;
+  animation: oilteaReveal 1.7s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+.oiltea-composition {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: oilteaComposition 12s ease-in-out infinite;
+}
+
+.oiltea-ring,
+.oiltea-leaf,
+.oiltea-ghost,
+.oiltea-ghost-ring,
+.oiltea-lights,
+.oiltea-aura,
+.oiltea-inner-light,
+.oiltea-flow-group {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.oiltea-aura {
+  animation: oilteaAura 12s ease-in-out -0.6s infinite;
+}
+
+.oiltea-ring-outer {
+  animation:
+    oilteaRing 24s linear infinite,
+    oilteaRingPresence 12s ease-in-out infinite;
+}
+
+.oiltea-ring-inner {
+  animation:
+    oilteaRing 32s linear -4.4s infinite reverse,
+    oilteaRingPresence 12s ease-in-out -1.6s infinite;
+}
+
+.oiltea-leaf-one {
+  animation:
+    oilteaLeafA 12s ease-in-out -2.4s infinite alternate,
+    oilteaLeafPresence 12s ease-in-out -2.4s infinite;
+}
+
+.oiltea-leaf-two {
+  animation:
+    oilteaLeafB 12s ease-in-out -7.1s infinite alternate-reverse,
+    oilteaLeafPresence 12s ease-in-out -7.1s infinite;
+}
+
+.oiltea-leaf-bg {
+  opacity: 0.7;
+  animation: oilteaLeafBg 14s ease-in-out -4.6s infinite alternate;
+}
+
+.oiltea-flow-trace {
+  animation: oilteaFlow 12s linear -2.2s infinite;
+}
+
+.oiltea-flow-group {
+  animation: oilteaFlowPresence 12s ease-in-out -1.4s infinite;
+}
+
+.oiltea-lights {
+  animation: oilteaLights 6s ease-in-out -1.2s infinite;
+}
+
+.oiltea-inner-light {
+  animation: oilteaInnerLight 12s ease-in-out -0.8s infinite;
+}
+
+.oiltea-vignette {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse at 52% 47%, transparent 32%, rgba(1, 1, 1, 0.14) 68%, rgba(1, 1, 1, 0.42) 100%),
+    linear-gradient(180deg, rgba(4, 3, 3, 0.18) 0%, transparent 18%, transparent 68%, rgba(4, 3, 3, 0.5) 100%);
+}
+
+.oiltea-caption {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 3;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 16px;
+  padding: 18px 18px 14px;
+  border-top: 1px solid rgba(193, 138, 77, 0.13);
+  background: linear-gradient(180deg, transparent 0%, rgba(9, 8, 7, 0.7) 28%, rgba(9, 8, 7, 0.94) 100%);
+  font: 500 9px/1.4 var(--mono);
+  letter-spacing: 0.17em;
+  color: rgba(244, 212, 154, 0.68);
+  text-transform: uppercase;
+}
+
+.oiltea-caption span:first-child {
+  max-width: 72%;
+}
+
+.oiltea-caption span:last-child {
+  color: rgba(139, 112, 65, 0.72);
+  letter-spacing: 0.13em;
+  white-space: nowrap;
+}
+
+.oiltea-visual.is-paused *,
+.oiltea-visual.is-page-hidden * {
+  animation-play-state: paused !important;
+}
+
+@keyframes oilteaReveal {
+  from {
+    opacity: 0;
+    filter: blur(13px);
+    transform: translateY(14px) scale(0.994);
+  }
+  to {
+    opacity: 1;
+    filter: blur(0);
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes oilteaComposition {
+  0%, 100% { transform: translate(0, 0) rotate(-0.2deg) scale(1); }
+  24% { transform: translate(0.2%, -0.3%) rotate(0.15deg) scale(1.004); }
+  52% { transform: translate(-0.25%, 0.2%) rotate(-0.35deg) scale(1.008); }
+  76% { transform: translate(-0.4%, -0.1%) rotate(-0.1deg) scale(1.002); }
+}
+
+@keyframes oilteaRing {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes oilteaRingPresence {
+  0%, 100% { opacity: 0.72; }
+  24% { opacity: 0.82; }
+  50% { opacity: 0.94; }
+  78% { opacity: 1; }
+}
+
+@keyframes oilteaLeafPresence {
+  0%, 100% { opacity: 0.5; }
+  25% { opacity: 0.68; }
+  50% { opacity: 0.88; }
+  78% { opacity: 1; }
+}
+
+@keyframes oilteaFlowPresence {
+  0%, 100% { opacity: 0.45; }
+  28% { opacity: 0.58; }
+  55% { opacity: 0.82; }
+  80% { opacity: 1; }
+}
+
+@keyframes oilteaLeafA {
+  from { transform: translate3d(0, 0, 0) rotate(-1.1deg); }
+  to { transform: translate3d(-2px, -5px, 0) rotate(0.7deg); }
+}
+
+@keyframes oilteaLeafB {
+  from { transform: translate3d(0, 0, 0) rotate(0.9deg); }
+  to { transform: translate3d(3px, 4px, 0) rotate(-0.7deg); }
+}
+
+@keyframes oilteaLeafBg {
+  from { transform: translate3d(0, 0, 0) rotate(-0.5deg); opacity: 0.56; }
+  to { transform: translate3d(-3px, 3px, 0) rotate(0.5deg); opacity: 0.76; }
+}
+
+@keyframes oilteaFlow {
+  to { stroke-dashoffset: -1144.754; }
+}
+
+@keyframes oilteaAura {
+  0%, 100% { opacity: 0.38; transform: scale(0.96); }
+  30% { opacity: 0.62; transform: scale(1.02); }
+  62% { opacity: 0.52; transform: scale(1.005); }
+  88% { opacity: 0.42; transform: scale(0.985); }
+}
+
+@keyframes oilteaInnerLight {
+  0%, 100% { opacity: 0.3; transform: scale(0.95); }
+  44% { opacity: 0.52; transform: scale(1.03); }
+  72% { opacity: 0.38; transform: scale(0.99); }
+}
+
+@keyframes oilteaLights {
+  0%, 100% { opacity: 0.32; transform: scale(0.88); }
+  46% { opacity: 0.74; transform: scale(1.1); }
+  70% { opacity: 0.48; transform: scale(0.96); }
+}
+
+@keyframes oilteaAmbient {
+  from { transform: translate3d(-2.5%, 1.5%, 0) scale(0.96); }
+  to { transform: translate3d(3%, -2%, 0) scale(1.06); }
+}
+
+@media (max-width: 1024px) {
+  .ph-oiltea .ph-inner {
+    grid-template-columns: 1fr;
+    align-items: start;
+    gap: 40px;
+    min-height: 0;
+  }
+
+  .ph-oiltea .ph-visual {
+    width: 100%;
+    max-width: 560px;
+    margin-inline: auto;
+  }
+
+  .oiltea-visual {
+    aspect-ratio: 1 / 1;
+  }
+}
+
+@media (max-width: 720px) {
+  .ph-oiltea {
+    padding-top: 48px;
+  }
+
+  .ph-oiltea .ph-inner {
+    gap: 30px;
+    padding-bottom: 38px;
+  }
+
+  .oiltea-visual {
+    aspect-ratio: 1 / 1;
+  }
+
+  .oiltea-glow {
+    filter: blur(52px);
+  }
+
+  .oiltea-glow-right,
+  .oiltea-ghost,
+  .oiltea-ghost-ring,
+  .oiltea-leaf-bg {
+    display: none;
+  }
+
+  .oiltea-caption {
+    padding: 15px 14px 12px;
+    font-size: 8px;
+    letter-spacing: 0.13em;
+  }
+
+  .oiltea-caption span:last-child {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .oiltea-visual *,
+  .oiltea-visual *::before,
+  .oiltea-visual *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  .oiltea-art {
+    opacity: 1;
+    filter: none;
+    transform: none;
+  }
+}

@@ -1,0 +1,108 @@
+// 3D MODELING / PERSONAL GAME-WORLD STUDIES
+// 仅使用项目中已有的真实软件视口、模型与场景截图；不生成虚构作品，不标注未确认的成果。
+
+export const modelingPage = {
+  slug: 'modeling',
+  number: '03',
+  en: '3D MODELING',
+  cn: '建模',
+  themeEn: 'BUILDING WORLDS, ONE MODEL AT A TIME.',
+  themeCn: '化抽象为具象',
+  hero: {
+    image: '/assets/interests/modeling/covers/ue5-playground.jpg',
+    alt: '游戏引擎中的第一人称场景测试视口：手持模型、测试角色与方块搭建的空间',
+    label: '视口截屏 · 制作中',
+    top: 'GAME ENGINE / SCENE TEST',
+  },
+  intro: {
+    lead: '游戏制作中少不了建模、动画设计。',
+    note: '相较于研究制作引擎，我想先从建模学起，毕竟学习建模，一方面能提高我的立体空间想象能力，另一方面还具备了另一艺术表达能力——将表达内容融于模型及动画中。',
+  },
+  manifesto: {
+    kicker: 'WHY I MODEL / 建模与游戏创作',
+    titleLines: ['先想象一个世界，', '再让它拥有形体。'],
+    body: '我对游戏最深的兴趣，不仅仅停留在“玩”，更是想知道它怎样被做出来，其中蕴含的情感、主题是如何表达出来的。学习建模是我游戏制作路上的起点，它让我第一次能把脑子里的东西落到实处。',
+    flow: [
+      { no: '01', en: 'IMAGINE', cn: '想象' },
+      { no: '02', en: 'MODEL', cn: '制作' },
+      { no: '03', en: 'ASSEMBLE', cn: '组装' },
+      { no: '04', en: 'EXPLORE', cn: '探索' },
+    ],
+    directions: [
+      {
+        no: '01',
+        en: 'CHARACTERS',
+        cn: '角色',
+        body: '我想让游戏里的角色拥有真实的体积、动作和情绪。现在从比例、结构和基础绑定开始，把想象中的人物一点点放到位。',
+      },
+      {
+        no: '02',
+        en: 'ENVIRONMENTS',
+        cn: '场景',
+        body: '建筑、地形和灯光决定一个场景可不可信。我喜欢从入口、台阶、树影这些具体的东西开始，让空间有方向，也有气氛。',
+      },
+      {
+        no: '03',
+        en: 'GAME WORLDS',
+        cn: '世界',
+        body: '把做好的资产放进游戏引擎，调整材质、灯光和镜头，看看它们第一次在场景里站住。这一刻，静态的模型才开始变成可以探索的世界。',
+      },
+    ],
+  },
+  worksIntro: ' ',
+  assets: {
+    no: '01',
+    en: '3D ASSETS',
+    cn: '资产与道具',
+    note: '从枪体、弹匣和 8mm 枪弹开始，我把一个道具拆成能在游戏里使用的零件；比例、硬表面和材质，是我现在最想练扎实的部分。',
+  },
+  subjects: [
+    {
+      id: 'nambu',
+      title: '南部十四式',
+      en: 'NAMBU TYPE 14',
+      image: '/assets/interests/modeling/process/blender-nambu-1920.jpg',
+      thumb: '/assets/interests/modeling/process/blender-nambu-1200.jpg',
+      alt: '3D 软件中的手枪、弹匣与枪弹模型视图',
+    },
+    {
+      id: 'ammo',
+      title: '8mm 枪弹',
+      en: '8MM CARTRIDGE',
+      image: '/assets/interests/modeling/process/blender-8mm-1920.jpg',
+      thumb: '/assets/interests/modeling/process/blender-8mm-1200.jpg',
+      alt: '3D 软件中的三枚 8mm 枪弹与大纲面板',
+    },
+  ],
+  rig: {
+    no: '02',
+    en: 'RIG & MOTION',
+    cn: '绑定与动作',
+    image: '/assets/interests/modeling/process/blender-firing-rig-1920.jpg',
+    thumb: '/assets/interests/modeling/process/blender-firing-rig-1200.jpg',
+    alt: '3D 软件中的开火动作曲线、骨架与手部姿态',
+    title: '让模型动起来',
+    body: '我在 3D 软件里调整骨架、手部和武器的关键帧，检查开火动作的节奏与形变。这次动作练习让我开始理解：模型进入游戏之后，怎样拥有重量和时间。',
+  },
+  environment: {
+    no: '03',
+    en: 'ENVIRONMENT & ARCHITECTURE',
+    cn: '场景与建筑',
+    title: '先让空间成立',
+    body: '这个入口场景是我对空间关系的一次练习。',
+    image: '/assets/interests/modeling/covers/modeling-entry-north-gate.jpg',
+    alt: '低多边形石质入口、树列与向远处延伸的道路场景',
+    caption: '场景练习 / 入口与纵深',
+    meta: 'SCENE STUDY / ENTRY + DEPTH',
+  },
+  game: {
+    kicker: 'FROM MODELING TO GAME DEVELOPMENT',
+    titleLines: ['从模型，', '到游戏世界的第一步。'],
+    body: '把模型放进游戏引擎后，第一件是让它具备它原应该有的特征。这个早期场景测试让我第一次看到引擎里一个模型从静态的资产到一个会动的游戏道具的过程。',
+    image: '/assets/interests/modeling/process/ue5-playground-detail-1600.jpg',
+    alt: '游戏引擎中的早期场景测试：测试角色、方块空间、手持模型与第一人称视角',
+    caption: '早期场景测试 / 视口截屏',
+    meta: 'GAME ENGINE / WORK IN PROGRESS',
+    coda: '接下来还有很多内容要学习，包括但不限于材质、灯光、动画和物理...而我相信，经过不断学习，我日后定能打造出真实震撼的游戏场景',
+  },
+}

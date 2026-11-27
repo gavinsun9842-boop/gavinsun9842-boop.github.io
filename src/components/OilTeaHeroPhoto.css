@@ -1,0 +1,164 @@
+/* AI 智启油茶香 Hero：全幅油茶风味主视觉，仅 oil-tea-ai 启用。 */
+
+.ph-oiltea-photo {
+  min-height: 780px;
+  background: #090807;
+  border-bottom-color: rgba(216, 173, 114, 0.16);
+}
+
+.ph-oiltea-photo::before { display: none; }
+
+.ph-oiltea-photo .ph-inner {
+  grid-template-columns: minmax(0, 760px) minmax(0, 1fr);
+  align-items: center;
+  min-height: 660px;
+}
+
+.ph-oiltea-photo .ph-copy {
+  position: relative;
+  z-index: 2;
+  max-width: 760px;
+  padding-bottom: 0;
+  text-shadow: 0 2px 30px rgba(9, 8, 7, 0.6);
+  animation: oth-copy-in 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) 0.12s both;
+}
+
+.ph-oiltea-photo .ph-title {
+  font-size: clamp(46px, 5.6vw, 92px);
+}
+
+.ph-oiltea-photo .ph-sub { max-width: 650px; }
+
+.ph-oiltea-photo .pm {
+  position: relative;
+  z-index: 2;
+  background: linear-gradient(180deg, rgba(9, 8, 7, 0.5), rgba(9, 8, 7, 0.94));
+}
+
+.oth-stage {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+  background: #090807;
+}
+
+.oth-photo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 68% center;
+  filter: saturate(0.92) contrast(1.04) brightness(0.94);
+}
+
+.oth-scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background:
+    linear-gradient(90deg, rgba(9, 8, 7, 0.94) 0%, rgba(9, 8, 7, 0.86) 30%, rgba(9, 8, 7, 0.48) 52%, rgba(9, 8, 7, 0.08) 74%, transparent 86%),
+    linear-gradient(180deg, rgba(9, 8, 7, 0.32) 0%, transparent 24%, transparent 70%, rgba(9, 8, 7, 0.66) 100%);
+}
+
+.oth-vignette {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse at 70% 46%, transparent 34%, rgba(4, 3, 3, 0.16) 72%, rgba(4, 3, 3, 0.44) 100%),
+    linear-gradient(180deg, rgba(5, 4, 4, 0.16), transparent 18%, transparent 76%, rgba(5, 4, 4, 0.3));
+}
+
+.oth-label,
+.oth-index {
+  position: absolute;
+  left: clamp(20px, 3.9vw, 56px);
+  z-index: 4;
+  font: 500 8px/1 var(--mono);
+  letter-spacing: 0.18em;
+  color: rgba(218, 197, 167, 0.74);
+  text-align: left;
+}
+
+.oth-label { top: 28px; }
+
+.oth-index {
+  top: 46px;
+  color: rgba(160, 139, 112, 0.48);
+  letter-spacing: 0.14em;
+}
+
+.oth-label::before {
+  content: '';
+  display: inline-block;
+  width: 5px;
+  height: 5px;
+  margin-right: 9px;
+  background: #d8ad72;
+  box-shadow: 0 0 0 1px rgba(216, 173, 114, 0.22);
+  vertical-align: 1px;
+}
+
+@keyframes oth-copy-in {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 1024px) {
+  .ph-oiltea-photo { min-height: 720px; }
+
+  .ph-oiltea-photo .ph-inner {
+    grid-template-columns: 1fr;
+    align-items: center;
+    min-height: 620px;
+  }
+
+  .ph-oiltea-photo .ph-copy { max-width: 700px; }
+
+  .oth-photo { object-position: 74% center; }
+}
+
+@media (max-width: 720px) {
+  .ph-oiltea-photo { min-height: 720px; }
+
+  .ph-oiltea-photo .ph-inner {
+    min-height: 650px;
+    padding-bottom: 40px;
+  }
+
+  .ph-oiltea-photo .ph-title { font-size: clamp(38px, 10.8vw, 60px); }
+
+  .oth-photo {
+    top: 34%;
+    height: 66%;
+    object-position: 82% center;
+    filter: saturate(0.94) contrast(1.02) brightness(0.82);
+  }
+
+  .oth-scrim {
+    background:
+      linear-gradient(180deg, rgba(9, 8, 7, 0.98) 0%, rgba(9, 8, 7, 0.94) 34%, rgba(9, 8, 7, 0.5) 48%, rgba(9, 8, 7, 0.06) 64%, transparent 80%, rgba(9, 8, 7, 0.7) 100%);
+  }
+
+  .oth-vignette {
+    background:
+      radial-gradient(ellipse at 74% 50%, transparent 30%, rgba(4, 3, 3, 0.24) 72%, rgba(4, 3, 3, 0.48) 100%),
+      linear-gradient(180deg, rgba(5, 4, 4, 0.2), transparent 20%, transparent 78%, rgba(5, 4, 4, 0.32));
+  }
+
+  .oth-label,
+  .oth-index { display: none; }
+
+  .ph-oiltea-photo .pm {
+    background: linear-gradient(180deg, rgba(9, 8, 7, 0.62), rgba(9, 8, 7, 0.95));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ph-oiltea-photo .ph-copy { animation: none !important; opacity: 1 !important; }
+}

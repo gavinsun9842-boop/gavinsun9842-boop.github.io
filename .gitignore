@@ -1,0 +1,37 @@
+# Dependencies
+node_modules/
+package-lock.json.bak
+
+# Production build output
+dist/
+.vite/
+
+# Local deploy / QA artifacts
+cdp-*/
+chrome-*/
+.game-audit/
+shots/
+docs/
+tools/
+作品集素材/
+# Root-only local screenshots (public/ assets must stay tracked)
+/*.png
+/*.jpg
+/*.jpeg
+/*.webp
+/*.gif
+*.log
+
+# Environment & credentials
+.env
+.env.*
+*.local
+*.pem
+*.key
+*.p12
+*.pfx
+*.crt
+
+# OS files
+.DS_Store
+Thumbs.db

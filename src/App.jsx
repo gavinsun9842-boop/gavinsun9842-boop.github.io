@@ -4,6 +4,7 @@ import { useSpotlightCard } from './effects.jsx'
 import { useRoute, matchProjectSlug, matchInterestSlug, navigate, projectUrl } from './router.js'
 import { useScrollRestoration, hasRestoredCurrentEntry } from './scrollMemory.js'
 import { projectBySlug } from './content/projects/index.js'
+import { resolveAsset } from './lib/media.js'
 import { wallAwards } from './content/awards.js'
 import { LightboxProvider } from './components/Lightbox.jsx'
 import AwardsWall from './components/AwardsWall.jsx'
@@ -25,8 +26,8 @@ const profile = {
     github:'github.com/gavinsun9842-boop'
 }
 
-const asset = (file) => `${import.meta.env.BASE_URL}assets/${file}`
-const media = (file) => `${import.meta.env.BASE_URL}${file.replace(/^\//, '')}`
+const asset = (file) => resolveAsset(`assets/${file}`)
+const media = (file) => resolveAsset(file)
 
 const navItems = [
   { id: 'overview', label: 'OVERVIEW' },

@@ -124,10 +124,12 @@
 }
 
 @media (max-width: 720px) {
-  .ph-oiltea-photo { min-height: 720px; }
+  .ph-oiltea-photo { min-height: 0; }
 
   .ph-oiltea-photo .ph-inner {
-    min-height: 650px;
+    min-height: 480px;
+    align-items: start;
+    padding-top: 24px;
     padding-bottom: 40px;
   }
 

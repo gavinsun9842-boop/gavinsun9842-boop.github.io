@@ -1,5 +1,5 @@
 // PHOTOGRAPHY / SELECTED WORKS
-// 真实摄影作品全部使用原始文件与原始宽高比，不生成低分辨率缩略图。
+// 真实摄影作品保留原始文件与原始宽高比；列表由高画质响应式副本加载，灯箱始终读取原图。
 // 页面仅使用 public/assets/interests/photography 下的归档副本；原始素材目录不被修改。
 
 const archiveFile = (name) => `/assets/interests/photography/archive/${name}`

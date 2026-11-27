@@ -329,6 +329,38 @@ function attachParallax(el, varX, varY, max) {
 function HomePage() {
   const { scrolled, progress } = useScrollEffects()
   const edgeRef = useRef(null)
+  const [menuOpen, setMenuOpen] = useState(false)
+
+  // 移动导航是非模态下拉层：支持 Esc、点外关闭，回到桌面断点时自动收起。
+  useEffect(() => {
+    if (!menuOpen) return undefined
+
+    const desktop = window.matchMedia('(min-width: 1025px)')
+    const onKeyDown = (event) => {
+      if (event.key !== 'Escape') return
+      setMenuOpen(false)
+      document.querySelector('.nav-toggle')?.focus()
+    }
+    const onPointerDown = (event) => {
+      if (!event.target.closest('[data-mobile-nav]')) setMenuOpen(false)
+    }
+    const onDesktop = (event) => {
+      if (event.matches) setMenuOpen(false)
+    }
+    const focusTimer = window.setTimeout(() => {
+      document.querySelector('.nav-mobile-panel a')?.focus()
+    }, 0)
+
+    document.addEventListener('keydown', onKeyDown)
+    document.addEventListener('pointerdown', onPointerDown)
+    desktop.addEventListener('change', onDesktop)
+    return () => {
+      window.clearTimeout(focusTimer)
+      document.removeEventListener('keydown', onKeyDown)
+      document.removeEventListener('pointerdown', onPointerDown)
+      desktop.removeEventListener('change', onDesktop)
+    }
+  }, [menuOpen])
 
   // 轻量指针视差：仅精确指针且未开启减弱动效时启用。
   useEffect(() => {
@@ -362,7 +394,7 @@ function HomePage() {
     <div className="site">
       <div className="scroll-progress" style={{ transform: `scaleX(${progress})` }} />
 
-      <header className={`nav ${scrolled ? 'scrolled' : ''}`}>
+      <header className={`nav ${scrolled ? 'scrolled' : ''}`} data-mobile-nav>
         <div className="nav-inner container">
           <a href="#top" className="brand" aria-label="回到首页">
             <span className="brand-mark">GS</span>
@@ -375,7 +407,27 @@ function HomePage() {
               </a>
             ))}
           </nav>
+          <button
+            type="button"
+            className="nav-toggle"
+            aria-label={menuOpen ? '关闭导航菜单' : '打开导航菜单'}
+            aria-expanded={menuOpen}
+            aria-controls="mobile-navigation"
+            onClick={() => setMenuOpen((open) => !open)}
+          >
+            <span aria-hidden="true" />
+            <span aria-hidden="true" />
+          </button>
         </div>
+        {menuOpen && (
+          <nav className="nav-mobile-panel" id="mobile-navigation" aria-label="移动端主导航">
+            {navItems.map((item) => (
+              <a key={item.id} href={`#${item.id}`} onClick={() => setMenuOpen(false)}>
+                {item.label}
+              </a>
+            ))}
+          </nav>
+        )}
       </header>
 
       <main>

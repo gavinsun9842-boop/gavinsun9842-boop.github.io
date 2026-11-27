@@ -13,7 +13,7 @@ export default function ClientHeroPhoto() {
         alt=""
         loading="eager"
         decoding="async"
-        fetchpriority="high"
+        fetchPriority="high"
       />
       <div className="pch-scrim" />
       <div className="pch-vignette" />

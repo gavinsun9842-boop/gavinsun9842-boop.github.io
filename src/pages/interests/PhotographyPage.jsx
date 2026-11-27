@@ -4,8 +4,20 @@ import { useLightbox } from '../../components/Lightbox.jsx'
 import { resolveAsset } from '../../lib/media'
 import { InterestShell } from '../../components/interests/InterestShell.jsx'
 
-function PhotoImage({ src, alt, loading = 'lazy', className = '' }) {
+const PHOTO_ROOT = '/assets/interests/photography/'
+
+function responsiveSrcSet(src) {
+  const value = String(src)
+  if (!value.startsWith(PHOTO_ROOT)) return undefined
+  const relative = value.slice(PHOTO_ROOT.length).replace(/\.(jpe?g|png)$/i, '')
+  const small = resolveAsset(`${PHOTO_ROOT}preview/${relative}-720.webp`)
+  const large = resolveAsset(`${PHOTO_ROOT}preview/${relative}-1440.webp`)
+  return `${small} 720w, ${large} 1440w`
+}
+
+function PhotoImage({ src, alt, loading = 'lazy', className = '', sizes = '(max-width: 820px) 50vw, 33vw' }) {
   const [failed, setFailed] = useState(false)
+  const srcSet = responsiveSrcSet(src)
 
   if (failed) {
     return (
@@ -18,10 +30,13 @@ function PhotoImage({ src, alt, loading = 'lazy', className = '' }) {
   return (
     <img
       src={resolveAsset(src)}
+      srcSet={srcSet}
+      sizes={srcSet ? sizes : undefined}
       alt={alt}
       className={className}
       loading={loading}
       decoding="async"
+      fetchPriority={loading === 'eager' ? 'high' : 'auto'}
       onError={() => setFailed(true)}
     />
   )
@@ -100,7 +115,7 @@ export default function PhotographyPage() {
           onClick={() => open(photoItems, 0)}
           aria-label="放大查看摄影主视觉"
         >
-          <PhotoImage src={page.hero.image} alt={page.hero.alt} loading="eager" />
+          <PhotoImage src={page.hero.image} alt={page.hero.alt} loading="eager" sizes="100vw" />
           <span className="pg-hero-scrim" />
         </button>
 
@@ -150,7 +165,7 @@ export default function PhotographyPage() {
                       onClick={() => openPhoto(page.interlude)}
                       aria-label={`放大查看${interludeGroup.cn}作品：${page.interlude.alt}`}
                     >
-                      <PhotoImage src={page.interlude.image} alt={page.interlude.alt} />
+                      <PhotoImage src={page.interlude.image} alt={page.interlude.alt} sizes="(max-width: 820px) 100vw, 1440px" />
                     </button>
                   )}
 
@@ -239,7 +254,7 @@ export default function PhotographyPage() {
               aria-label={`放大查看：${item.label}`}
             >
               <span className="pg-ai-image">
-                <PhotoImage src={item.thumb} alt={item.alt} />
+                <PhotoImage src={item.thumb} alt={item.alt} sizes="(max-width: 820px) 50vw, 25vw" />
               </span>
               <span className="pg-ai-caption">
                 <h3>{item.cn}</h3>

@@ -13,7 +13,7 @@ export default function OilTeaHeroPhoto() {
         alt=""
         loading="eager"
         decoding="async"
-        fetchpriority="high"
+        fetchPriority="high"
       />
       <div className="oth-scrim" />
       <div className="oth-vignette" />

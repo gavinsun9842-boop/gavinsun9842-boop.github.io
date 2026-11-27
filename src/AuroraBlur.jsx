@@ -349,11 +349,15 @@ export default function AuroraBlur({
     const frame = (now) => {
       raf = 0
       if (!visible || document.hidden) return
+      if (reduceMotion) {
+        render()
+        return
+      }
       const dt = last ? Math.min((now - last) / 1000, 0.05) : 1 / 60
       last = now
-      if (!reduceMotion) clock += dt
+      clock += dt
       acc += dt
-      if (acc >= FRAME_INTERVAL || reduceMotion) {
+      if (acc >= FRAME_INTERVAL) {
         acc = 0
         render()
       }

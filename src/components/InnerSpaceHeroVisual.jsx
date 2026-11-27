@@ -13,7 +13,7 @@ export default function InnerSpaceHeroVisual() {
         alt=""
         loading="eager"
         decoding="async"
-        fetchpriority="high"
+        fetchPriority="high"
       />
       <div className="is-scrim" />
       <div className="is-vignette" />

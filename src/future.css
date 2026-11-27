@@ -429,7 +429,7 @@
   }
 
   .future-index-item {
-    grid-template-columns: 22px minmax(0, 1fr);
+    grid-template-columns: minmax(0, 1fr);
     gap: 7px;
     padding: 11px 0 10px;
   }

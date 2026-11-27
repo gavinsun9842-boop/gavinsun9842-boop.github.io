@@ -17,6 +17,9 @@
 }
 
 .pd-nav-right a {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
   font: 500 11px/1 var(--mono);
   letter-spacing: 0.14em;
   color: var(--muted);
@@ -1091,6 +1094,8 @@
   padding: 17px 0 19px;
   scrollbar-width: thin;
   scrollbar-color: rgba(255, 74, 28, 0.35) transparent;
+  overscroll-behavior-inline: contain;
+  -webkit-overflow-scrolling: touch;
 }
 
 .code-body:focus-visible {
@@ -2527,6 +2532,7 @@
 
 @media (max-width: 1024px) {
   .ph-inner { grid-template-columns: 1fr; align-items: start; gap: 40px; }
+  .ph-links a { min-height: 44px; }
   .ph-cover img { aspect-ratio: 16 / 11; }
   .ph-visual { max-width: 720px; }
   .ph-organic .ph-inner { min-height: 540px; }
@@ -2565,8 +2571,16 @@
 }
 
 @media (max-width: 720px) {
-  .ph { padding-top: 48px; }
-  .ph-has-bg .ph-inner { min-height: 430px; }
+  .pd-nav {
+    height: calc(72px + env(safe-area-inset-top));
+    padding-top: env(safe-area-inset-top);
+  }
+  .ph { padding-top: 40px; }
+  .ph-has-bg .ph-inner {
+    min-height: 360px;
+    align-items: start;
+    padding-top: 36px;
+  }
   .ph-has-bg .pm {
     background: rgba(7, 9, 11, 0.84);
     backdrop-filter: none;
@@ -2575,7 +2589,11 @@
   .ph-title { font-size: clamp(38px, 11vw, 60px); }
   .ph-sub { font-size: 15px; }
   .ph-inner { padding-bottom: 38px; }
-  .ph-organic .ph-inner { min-height: 500px; }
+  .ph-organic .ph-inner {
+    min-height: 400px;
+    align-items: start;
+    padding-top: 20px;
+  }
   .ph-organic::after {
     background:
       linear-gradient(180deg,
@@ -2711,6 +2729,11 @@
   .cert-card.is-wide .cert-card-body { padding: 14px 2px 2px; }
   .related-head { flex-direction: column; align-items: flex-start; gap: 6px; }
   .related-note { text-align: left; }
+  .related-card-note {
+    overflow: visible;
+    text-overflow: clip;
+    white-space: normal;
+  }
 
   .vid-play-icon { width: 56px; height: 56px; }
   .vid-cap { flex-direction: column; align-items: flex-start; gap: 6px; }
@@ -2721,10 +2744,12 @@
   .pager-card img { width: 84px; height: 62px; }
   .pager-title { font-size: 16px; }
 
-  .lb { padding: 12px 14px 16px; }
+  .lb { padding: 12px 14px calc(16px + env(safe-area-inset-bottom)); }
+  .lb-close { width: 44px; height: 44px; }
   .lb-nav button { width: 44px; height: 44px; }
   .lb-foot { flex-direction: column; align-items: stretch; gap: 12px; }
   .lb-zoom { flex-wrap: wrap; justify-content: flex-end; }
+  .lb-zoom button { min-width: 44px; height: 44px; }
   .lb-nav { justify-content: flex-end; }
 }
 
